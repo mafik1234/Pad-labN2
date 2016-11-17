@@ -6,10 +6,6 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
-
-
-
-
 public class TcpServer  extends Thread {
 
 	 private ServerSocket serverSocket;
@@ -30,9 +26,6 @@ public class TcpServer  extends Thread {
 			e.printStackTrace();
 		}
 	 	   
-		
-	     
-
 	      while(true) {
 	         try {
 	            System.out.println("Waiting for client on port " + 
@@ -40,9 +33,8 @@ public class TcpServer  extends Thread {
 	            //serverul accespta conectiuni
 	            Socket server = serverSocket.accept();
 	            new TcpServerThread(server,thisNode,listNodes).start();
-	            
-	           
-	            	}catch(SocketTimeoutException s) {
+	            	}
+	         catch(SocketTimeoutException s) {
 	            System.out.println("Socket timed out!");
 	            break;
 	         }catch(IOException e) {

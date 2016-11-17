@@ -21,8 +21,6 @@ public class TcpServerThread extends Thread {
 	protected String topName;
 	ArrayList<Nodes> listNodes;
 	Tcp tcp = new Tcp();
-	public ArrayList<Integer> colection=new ArrayList<Integer>();
-	
 	public ArrayList<Worker> listWorkers = new ArrayList<Worker>();
 	private Nodes thisNode;
 	public TcpServerThread(Socket clientSocket,Nodes thisNode, ArrayList<Nodes> listNodes) {
@@ -34,26 +32,18 @@ public class TcpServerThread extends Thread {
 
 	public void run() {
 
-		populateColection();
 		try {
 			FileReader fr=new FileReader();
-			
 			listWorkers=fr.getObjFromFile("col"+thisNode.getId()+".json");
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		/*
-		 * for(Integer node : colection){
-		 * System.out.println("colect item  "+node); }
-		 */
-
-		while (true) {
+		
+	
 			try {
 
 				DataInputStream in = new DataInputStream(server.getInputStream());
 				String input = in.readUTF();
-			
 				String command = getAttribute("command", input);
 				String message = getAttribute("message", input);
 				if (command.equals("get")) {
@@ -74,20 +64,18 @@ public class TcpServerThread extends Thread {
 
 			} catch (IOException e) {
 				System.out.println("Client deconectat With Ctrl+C");
-				// e.printStackTrace();
+				
 				return;
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-	}
+	
 
 	public String getAttribute(String key, String input) throws JSONException {
 		JSONObject jObject = new JSONObject(input);
@@ -95,16 +83,6 @@ public class TcpServerThread extends Thread {
 		return command;
 	}
 
-	public void populateColection() {
-		
-		int n = (listNodes.size() + 1) * 10;
-		for (int i = 1; i <= n; i++) {
-			Random rand = new Random();
-
-			int  val = rand.nextInt(50) + 1;
-			colection.add(val);
-		}
-	}
 
 	public ArrayList<String> getAll(Socket server) {
 		ArrayList<String> listResp = new ArrayList<String>();
@@ -123,10 +101,10 @@ public class TcpServerThread extends Thread {
 				soket.close();
 
 			} catch (UnknownHostException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+	
 				e.printStackTrace();
 			}
 

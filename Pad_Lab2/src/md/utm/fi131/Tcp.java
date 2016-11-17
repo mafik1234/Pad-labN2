@@ -10,10 +10,9 @@ import java.net.UnknownHostException;
 
 public class Tcp {
 
-	//trimmite mesaj
+	
 	public void tcpSend(String mes,Socket client){
 		
-
 		try {
 			
 			OutputStream outToServer = client.getOutputStream();
@@ -39,10 +38,9 @@ public class Tcp {
 			inFromServer = client.getInputStream();
 			  DataInputStream in = new DataInputStream(inFromServer);
 			  String mes=in.readUTF();
-		      //  System.out.println("Server says " + mes);
 		        return mes;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return null;

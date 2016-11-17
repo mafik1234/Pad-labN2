@@ -18,7 +18,6 @@ import com.google.gson.Gson;
 
 public class InformerThread extends Thread {
 	int thread;
-	
 	String configFile;
 	Nodes thisNode;
 	public ArrayList<Nodes> listNodes;
@@ -35,31 +34,22 @@ public class InformerThread extends Thread {
 	}
 
 	public void run() {
-
-		thisNode = XmlTool.getNodeFtomConfig(configFile);
-		listNodes = XmlTool.getNodeList(configFile);
-		
+		thisNode = XmlTool.getNodeFtomConfig(configFile);//citeste configuratiile lui 
+		listNodes = XmlTool.getNodeList(configFile);// citeste configuratiile cu nodurile care are legatura
 		int port = 5000;
-		String group = "225.4.5.6";
-
-		
+		String group = "225.4.5.6";	
 		new TcpServer(thisNode,listNodes).start();
 		Udp udp = new Udp();
 		DatagramPacket receivePacket;
 		try {
-//asteapta mesaje
+             //asteapta mesaje
 			receivePacket = udp.reciveMulticast(group, port);
-
 			String con = listNodes.size() + "";
-
 			String res = "{\"nodeId\":\"" + thisNode.getId() + "\",\"nodeIP\":\"" + thisNode.getNodeIp()
 					+ "\",\"tcpPort\":\"" + thisNode.getTcpPort() + "\",\"connections\":\"" + con + "\"}";
-			
-			//String json = new Gson().toJson(listNodes );
 			udp.sendResponceToClient(res, receivePacket, port, group);
              // Tremite raspuns 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

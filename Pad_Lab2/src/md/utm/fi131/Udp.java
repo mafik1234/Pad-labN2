@@ -13,8 +13,6 @@ import java.util.ArrayList;
 
 public class Udp {
 
-	
-	//return informatie despre noduri
 	public ArrayList<String> getInfNodes(String group, int port, String message) throws IOException {
 	
 		ArrayList<String> listNodes = new ArrayList<String>();
